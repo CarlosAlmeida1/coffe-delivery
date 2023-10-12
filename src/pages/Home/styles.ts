@@ -137,4 +137,18 @@ export const StoreContainer = styled.section`
     font-size: 2rem;
     color: ${(props) => props.theme['base-subtitle']};
   }
+
+  ul {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.5rem 2rem;
+    padding-bottom: 2rem;
+  }
+
+   @media (min-width: 992px) {
+    ul {
+      justify-content: flex-start;
+    
 `;

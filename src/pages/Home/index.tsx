@@ -1,4 +1,5 @@
 import CoffeCup from '../../assets/hero-img.png';
+import { coffeList } from '../../utils/coffeList';
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react';
 import {
   BadgeCart,
@@ -7,6 +8,7 @@ import {
   LandingContainer,
   StoreContainer,
 } from './styles';
+import { ProductList } from './components/ProductList';
 
 export function Home() {
   return (
@@ -47,6 +49,11 @@ export function Home() {
 
       <StoreContainer>
         <h2>Nossos cafés</h2>
+        <ul className='product-list'>
+          {coffeList.map((coffe) => {
+            return <ProductList key={coffe.id} product={coffe} />;
+          })}
+        </ul>
       </StoreContainer>
     </>
   );
