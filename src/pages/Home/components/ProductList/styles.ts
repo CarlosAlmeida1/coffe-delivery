@@ -55,12 +55,15 @@ export const ProductItemContainer = styled.li`
 
   footer {
     margin-top: auto;
+    display: flex;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
   }
 
   footer span {
-    margin-right: 0.15rem;
+    margin-right: -1rem;
+    margin-top: 0.5rem;
     font-size: 0.75rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -71,7 +74,23 @@ export const ProductItemContainer = styled.li`
   footer strong {
     color: ${(props) => props.theme['base-text']};
     font-family: 'Ballo 2', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     font-weight: 800;
+  }
+
+  .buy-button {
+    background: ${(props) => props.theme['purple-dark']};
+    color: ${(props) => props.theme['white']};
+    margin-left: -0.5rem;
+    padding: 0.3rem;
+    border-radius: 6px;
+
+    display: flex;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: ${(props) => props.theme['purple']};
+    }
   }
 `;

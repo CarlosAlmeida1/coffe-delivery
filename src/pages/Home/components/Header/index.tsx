@@ -1,10 +1,10 @@
 import { CartButton, HeaderContainer, LocationBadge } from './styles';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CoffeDeliveryLogo from '../../../../assets/logotipo.svg';
 import { MapPin, ShoppingCart } from 'phosphor-react';
 
 export function Header() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <HeaderContainer>
@@ -16,7 +16,7 @@ export function Header() {
           <span>Goioerê, PR</span>
         </LocationBadge>
 
-        <CartButton title='Carrinho'>
+        <CartButton title='Carrinho' onClick={() => navigate('/checkout')}>
           <ShoppingCart size={18} weight='fill' />
         </CartButton>
       </div>

@@ -1,8 +1,12 @@
+import React from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { ProductItemContainer } from './styles';
 import ScrollReveal from 'scrollreveal';
 import { formatCashToString } from '../../../../utils/formatCashToString';
-
+import { ShoppingCart } from 'phosphor-react';
+import { InputCount } from '../InputCount';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 export interface Product {
   id: number;
   name: string;
@@ -19,7 +23,7 @@ interface ProductItemProps {
 
 export function ProductList({ product }: ProductItemProps) {
   const productRef = useRef<HTMLAnchorElement>(null);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [valueFormat, setValueFormat] = useState<number | string>(
     product.price
   );
@@ -31,6 +35,43 @@ export function ProductList({ product }: ProductItemProps) {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const newPrice = formatCashToString(product.price * count);
+    setValueFormat(newPrice);
+  }, [product.price, count]);
+
+  function handleAddOneProduct() {
+    const newCount = count + 1;
+
+    if (newCount >= 50) {
+      toast.warn('Quantidade máxima: 49');
+      return;
+    }
+
+    setCount(newCount);
+  }
+
+  function handleRemoveOneProduct() {
+    const newCount = count - 1;
+
+    if (newCount <= 0) {
+      toast.warn('Quantidade mínima: 1');
+      return;
+    }
+
+    setCount(newCount);
+  }
+
+  function handleChangeProduct(countProduct: number) {
+    const newCount = countProduct;
+
+    if (newCount < 1 || newCount >= 50) {
+      return;
+    }
+
+    setCount(newCount);
+  }
 
   return (
     <ProductItemContainer ref={productRef}>
@@ -51,6 +92,22 @@ export function ProductList({ product }: ProductItemProps) {
         <strong>
           {count === 0 ? formatCashToString(product.price) : valueFormat}
         </strong>
+
+        <div className='actions'>
+          <InputCount
+            value={count}
+            onAddProduct={handleAddOneProduct}
+            onRemoveProduct={handleRemoveOneProduct}
+            onChange={(e) => handleChangeProduct(Number(e.target.value))}
+            min={1}
+            max={50}
+          />
+          <ToastContainer />
+        </div>
+
+        <button className='buy-button'>
+          <ShoppingCart size={22} weight='fill' />
+        </button>
       </footer>
     </ProductItemContainer>
   );
