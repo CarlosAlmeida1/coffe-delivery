@@ -14,11 +14,11 @@ body, input, textarea,button{
 }
 
 input::placeholder{
-  colot:${(props) => props.theme['base-hover']}
+  color:${(props) => props.theme['base-label']}
 }
 
 input{
-  colot:${(props) => props.theme['base-hover']}
+  color:${(props) => props.theme['base-label']}
 }
 
 body{

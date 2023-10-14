@@ -59,7 +59,33 @@ export const Button = styled.button`
   }
 `;
 
-export const CartButton = styled(Button)`
+interface cartButtonProps {
+  numberToItemAtShopCart: number;
+}
+
+export const CartButton = styled(Button)<cartButtonProps>`
   color: ${(props) => props.theme['yellow-dark']};
   background: ${(props) => props.theme['yellow-light']};
+
+  &::after {
+    content: '${(props) => props.numberToItensAtShopCart}';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    display: ${(props) =>
+      props.numberToItensAtShopCart === 0 ? 'none' : 'flex'};
+
+    position: absolute;
+    top: 24px;
+    right: -8px;
+    background: ${(props) => props.theme['yellow-dark']};
+    color: ${(props) => props.theme['white']};
+
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 0.75rem;
+  }
 `;

@@ -22,12 +22,14 @@ type FullCartList = {
 interface ShoppingCartContextData {
   cart: FullCartList[];
   addProductToShopCart: (product: Product, count: number) => void;
+  updateCountProduct: (productID: number, count: number) => void;
+  deleteProductAtCart: (productID: number) => void;
+  clearCart: () => void;
 }
 
-export const ShoppingCartContext = createContext<ShoppingCartContextData>({
-  cart: [],
-  addProductToShopCart: () => {},
-});
+export const ShoppingCartContext = createContext<ShoppingCartContextData>(
+  {} as ShoppingCartContextData
+);
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [loadLocalStorage, saveToLocalStorage] = useLocalStorage();
@@ -40,35 +42,59 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   });
 
   function addProductToShopCart(product: Product, count: number) {
-    const hasProductIndex = cart.findIndex(
+    const hasProductItemIndex = cart.findIndex(
       (item) => item.product.id === product.id
     );
 
-    if (hasProductIndex !== -1) {
-      const newList = [...cart];
-      newList[hasProductIndex].count += count;
-
-      if (newList[hasProductIndex].count > 49) {
-        toast.warn('Quantidade máxima: 49');
-        return;
-      }
+    if (hasProductItemIndex < 0) {
+      const newList = [...cart, { product, count }];
 
       setCart(newList);
-      saveToLocalStorage(newList, '@coffe-delivery:shop-cart');
+      saveToLocalStorage(newList, '@coffee-delivery:shop-cart');
       toast.success('Item adicionado ao carrinho');
     } else {
-      if (count > 49) {
-        toast.warn('Quantidade máxima: 49');
-        return;
-      }
+      const newList = cart.map((item) => {
+        if (item.product.id === product.id) {
+          const newCount = item.count + count;
 
-      const newItem = { product, count };
-      const newList = [...cart, newItem];
+          if (newCount > 99) {
+            toast.warn('Quantidade máxima: 99');
+            return { ...item, count: 99 };
+          } else {
+            toast.success('Item adicionado ao carrinho');
+            return { ...item, count: newCount };
+          }
+        } else {
+          return item;
+        }
+      });
 
       setCart(newList);
-      saveToLocalStorage(newList, '@coffe-delivery:shop-cart');
-      toast.success('Item adicionado ao carrinho');
+      saveToLocalStorage(newList, '@coffee-delivery:shop-cart');
     }
+  }
+
+  function updateCountProduct(productID: number, count: number) {
+    const updateProduct = cart.map((item) => {
+      return productID === item.product.id ? { ...item, count } : item;
+    });
+
+    setCart(updateProduct);
+  }
+
+  function deleteProductAtCart(productUD: number) {
+    const newCartList = cart.filter((item) => item.product.id !== productUD);
+
+    setCart(newCartList);
+    localStorage.setItem(
+      '@coffe-delivery:shop-cart',
+      JSON.stringify(newCartList)
+    );
+  }
+
+  function clearCart() {
+    setCart([]);
+    localStorage.removeItem('@coffe-delivery:shop-cart');
   }
 
   return (
@@ -76,6 +102,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       value={{
         cart,
         addProductToShopCart,
+        updateCountProduct,
+        deleteProductAtCart,
+        clearCart,
       }}
     >
       {children}

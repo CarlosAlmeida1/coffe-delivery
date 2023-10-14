@@ -4,13 +4,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '../../hooks/useCart';
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { ShoppingCart } from './components/ShoppingCart';
 
 const checkoutValidationSchema = zod.object({
   street: zod.string().min(3),
-  numberHouse: zod.string().min(1, 'Informar número da residência'),
+  numberHouse: zod.string().min(1, 'Informe o número da residência'),
   complement: zod.string().optional(),
   district: zod.string(),
   city: zod.string().min(3),
@@ -22,7 +22,9 @@ export type PaymentMethod = 'cash' | 'credit' | 'debit';
 
 export function Checkout() {
   const { cart, clearCart } = useCart();
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>();
+  const [paymentMethod, setPaymentMethod] = useState<
+    PaymentMethod | undefined
+  >();
 
   const methods = useForm<CheckoutFormatValues>({
     resolver: zodResolver(checkoutValidationSchema),
@@ -35,7 +37,7 @@ export function Checkout() {
   } = methods;
 
   useEffect(() => {
-    if (cart.length <= 0) {
+    if (Object.keys(errors).length !== 0) {
       toast.error('Preencher corretamente o formulário de endereço');
     }
   }, [errors]);
@@ -47,7 +49,7 @@ export function Checkout() {
     }
 
     if (!paymentMethod) {
-      toast.warn('Necessário escolher um método de pagamento');
+      toast.warn('Escolha um método de pagamento');
       return;
     }
 
@@ -67,6 +69,8 @@ export function Checkout() {
             paymentMethod={paymentMethod}
             onSelectPaymentMethod={handleSelectPaymentMethod}
           />
+
+          <ShoppingCart />
         </Form>
       </FormProvider>
     </Container>

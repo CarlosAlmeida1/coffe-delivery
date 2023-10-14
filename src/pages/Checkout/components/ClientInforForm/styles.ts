@@ -46,10 +46,8 @@ export const FormAddress = styled.div`
     grid-template-areas:
       'cep none none'
       'street street street'
-      'numberHouse numberHouse numberHouse'
-      'complement complement complement'
-      'district district district'
-      'city city uf';
+      'numberHouse  complement complement'
+      'district city uf';
 
     #cep {
       grid-area: cep;
@@ -82,8 +80,8 @@ export const FormAddress = styled.div`
 `;
 
 export const HeaderBase = styled.header`
-  height: 2.75rem;
   width: 100%;
+  height: 2.75rem;
   display: flex;
   gap: 0.5rem;
 
@@ -96,8 +94,8 @@ export const HeaderBase = styled.header`
   }
 
   span {
-    font-size: 0.875rem;
     font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 130%;
     color: ${(props) => props.theme['base-text']};
@@ -137,16 +135,12 @@ export const PaymentMethodButton = styled.div`
 
     svg {
       margin-right: 0.5rem;
+      color: ${(props) => props.theme['purple-dark']};
     }
 
     &:not(.selected):hover {
       background: ${(props) => props.theme['base-hover']};
     }
-  }
-
-  .selected {
-    border: 1px solid ${(props) => props.theme['purple']};
-    background: ${(props) => props.theme['purple-light']};
   }
 
   @media (min-width: 1120px) {

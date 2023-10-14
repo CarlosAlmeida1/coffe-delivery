@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { InputDefault } from '../InputDefault';
 import { PaymentMethod } from '../..';
 import { toast } from 'react-toastify';
-import { useFormContext } from 'react-hook-form'; // Importe o useFormContext
+import { useFormContext } from 'react-hook-form';
 
 interface ClientFormProps {
   paymentMethod: PaymentMethod | undefined;
@@ -27,16 +27,17 @@ export function ClientInfoForm({
   paymentMethod,
   onSelectMethod,
 }: ClientFormProps) {
-  const { setValue } = useFormContext(); // Corrija a desestruturação
+  const { setValue } = useFormContext();
   const [zipCode, setZipCode] = useState<string>('');
 
   async function handleLoadAddressAboutZipCode() {
-    const zipCodeFormat = zipCode.replace(/[^\d]+/g, ''); // Corrija 'zipcode' para 'zipCode'
+    const zipCodeFormat = zipCode.replace(/[^\d]+/g, '');
 
     const address = await fetch(
-      `http://viacep.com.br/ws/${zipCodeFormat}/json/` // Corrija 'zipcodeFormatted' para 'zipCodeFormat'
+      `http://viacep.com.br/ws/${zipCodeFormat}/json/`
     )
       .then((res) => res.json())
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((_) => {
         if (zipCodeFormat.length < 6) {
           toast.error('Endereço não encontrado');
@@ -59,8 +60,11 @@ export function ClientInfoForm({
       <div className='user-address'>
         <HeaderFormAddress>
           <MapPinLine size={22} weight='regular' />
-          <p>Endereço de entrega</p>
-          <span>Informe o endereço onde deseja receber seu pedido</span>
+          <div>
+            <p>Endereço de entrega</p>
+
+            <span>Informe o endereço onde deseja receber seu pedido</span>
+          </div>
         </HeaderFormAddress>
 
         <FormAddress>
@@ -88,6 +92,7 @@ export function ClientInfoForm({
             registerName='complement'
             placeholder='Complemento'
             gridArea='complement'
+            optionLabel
           />
 
           <InputDefault

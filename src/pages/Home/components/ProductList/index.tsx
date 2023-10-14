@@ -7,6 +7,8 @@ import { ShoppingCart } from 'phosphor-react';
 import { InputCount } from '../InputCount';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
+import { useCart } from '../../../../hooks/useCart';
+
 export interface Product {
   id: number;
   name: string;
@@ -27,6 +29,8 @@ export function ProductList({ product }: ProductItemProps) {
   const [valueFormat, setValueFormat] = useState<number | string>(
     product.price
   );
+
+  const { addProductToShopCart } = useCart();
 
   useEffect(() => {
     if (productRef.current) {
@@ -50,6 +54,19 @@ export function ProductList({ product }: ProductItemProps) {
     }
 
     setCount(newCount);
+  }
+
+  function handleAddProductAtTheShopCart() {
+    const productItem = {
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      image: product.image,
+      price: product.price,
+    };
+
+    setCount(1);
+    addProductToShopCart({ ...productItem }, count);
   }
 
   function handleRemoveOneProduct() {
@@ -105,7 +122,7 @@ export function ProductList({ product }: ProductItemProps) {
           <ToastContainer />
         </div>
 
-        <button className='buy-button'>
+        <button className='buy-button' onClick={handleAddProductAtTheShopCart}>
           <ShoppingCart size={22} weight='fill' />
         </button>
       </footer>
