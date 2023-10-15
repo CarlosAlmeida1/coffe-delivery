@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  h2{
+    color: ${(props) => props.theme['base-subtitle']};
+
+  }
+
   width: 100%;
   max-width: 40rem;
 
@@ -8,14 +13,14 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
+  
 
   .purchase-details {
     width: 100%;
     padding: 2.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
+    stroke: ${(props) => props.theme['purple']};
     border-radius: 6px 44px;
     background: ${(props) => props.theme['base-card']};
 
@@ -39,9 +44,8 @@ export const Container = styled.div`
       }
     }
 
-    button {
+    > button {
       margin-top: 1.5rem;
-      padding: 0.75rem;
       padding: 0.75rem 0.5rem;
 
       display: flex;
@@ -54,25 +58,23 @@ export const Container = styled.div`
       line-height: 160%;
 
       background: ${(props) => props.theme['yellow']};
-      color: ${(props) => props.theme['white']}
+      color: ${(props) => props.theme['white']};
       text-transform: uppercase;
       cursor: pointer;
 
       transition: background-color 0.3s;
 
-      &:hover{
-        background: ${(props) => props.theme['yellow-dark']};
-      }
+      &:hover {
+        background: ${(props) => props.theme['yellow-dark']}
 
-       &:disabled {
-        background: ${(props) => props.theme['base-button']};
+      &:disabled {
+        background: ${(props) => props.theme['yellow']};
         cursor: not-allowed;
       }
     }
 
-   
-
-     @media (min-width: 1120px) {
+    // Desktop //
+    @media (min-width: 1120px) {
       & {
         max-width: 28rem;
       }

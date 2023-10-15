@@ -29,7 +29,7 @@ const coffeList: Coffe[] = [
     name: 'Expresso Tradicional',
     description: 'O tradicional café feito com água quente e grãos moídos',
     tags: ['TRADICIONAL'],
-    price: 1,
+    price: 9.9,
     image: expressoTradicional,
     isAvailable: true,
   },

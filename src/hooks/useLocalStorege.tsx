@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function useLocalStorage() {
-  function saveToLocalStorage(data: number | string, key: string) {
-    if (!data) {
-      const dataJSON = JSON.stringify(data);
-
-      localStorage.setItem(key, dataJSON);
-    }
+  function saveToLocalStorage(data: any, key: string) {
+    if (!data) return;
+    const dataJSON = JSON.stringify(data);
+    localStorage.setItem(key, dataJSON);
   }
 
   function loadLocalStorage(key: string) {

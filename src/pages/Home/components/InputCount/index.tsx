@@ -3,24 +3,24 @@ import { InputCountContainer } from './styles';
 import { InputHTMLAttributes } from 'react';
 
 interface InputCountProps extends InputHTMLAttributes<HTMLInputElement> {
-  onAddProduct?: () => void;
-  onRemoveProduct?: () => void;
+  onClickAddProduct?: () => void;
+  onClickRemoveProduct?: () => void;
 }
 
 export function InputCount({
-  onAddProduct,
-  onRemoveProduct,
+  onClickAddProduct,
+  onClickRemoveProduct,
   ...rest
 }: InputCountProps) {
   return (
     <InputCountContainer>
-      <button type='button' onClick={onRemoveProduct}>
+      <button type='button' onClick={onClickRemoveProduct}>
         <Minus size={14} weight='bold' />
       </button>
 
       <input type='number' {...rest} />
 
-      <button type='button' onClick={onAddProduct}>
+      <button type='button' onClick={onClickAddProduct}>
         <Plus size={14} weight='bold' />
       </button>
     </InputCountContainer>

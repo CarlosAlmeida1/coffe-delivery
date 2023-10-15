@@ -59,22 +59,22 @@ export const Button = styled.button`
   }
 `;
 
-interface cartButtonProps {
-  numberToItemAtShopCart: number;
+interface CartButtonProps {
+  numbertoitemsatshopcart: number;
 }
 
-export const CartButton = styled(Button)<cartButtonProps>`
+export const CartButton = styled(Button)<CartButtonProps>`
   color: ${(props) => props.theme['yellow-dark']};
   background: ${(props) => props.theme['yellow-light']};
 
   &::after {
-    content: '${(props) => props.numberToItensAtShopCart}';
+    content: '${(props) => props.numbertoitemsatshopcart}';
     width: 20px;
     height: 20px;
     border-radius: 50%;
 
     display: ${(props) =>
-      props.numberToItensAtShopCart === 0 ? 'none' : 'flex'};
+      props.numbertoitemsatshopcart === 0 ? 'none' : 'flex'};
 
     position: absolute;
     top: 24px;

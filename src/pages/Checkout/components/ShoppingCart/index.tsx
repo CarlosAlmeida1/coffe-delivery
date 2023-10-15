@@ -46,8 +46,7 @@ export function ShoppingCart() {
         )}
 
         <div className='prices'>
-          <span>Total de itens</span>
-          <span>R$ {sumTotalOfItensFormatted}</span>
+          <span>Total de itens</span> <span>R$ {sumTotalOfItensFormatted}</span>
           <span>Taxa de entrega</span>
           <span>R$ {custOfDeliveryFormattedToBR}</span>
           <span>
@@ -59,7 +58,7 @@ export function ShoppingCart() {
         </div>
 
         <button type='submit' disabled={!hasProductInShoppingCart}>
-          <p>Confirmar Pedido</p>
+          comfirmar pedido
         </button>
       </div>
     </Container>

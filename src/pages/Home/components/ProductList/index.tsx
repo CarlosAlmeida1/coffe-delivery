@@ -5,7 +5,7 @@ import ScrollReveal from 'scrollreveal';
 import { formatCashToString } from '../../../../utils/formatCashToString';
 import { ShoppingCart } from 'phosphor-react';
 import { InputCount } from '../InputCount';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { useCart } from '../../../../hooks/useCart';
 
@@ -45,17 +45,6 @@ export function ProductList({ product }: ProductItemProps) {
     setValueFormat(newPrice);
   }, [product.price, count]);
 
-  function handleAddOneProduct() {
-    const newCount = count + 1;
-
-    if (newCount >= 50) {
-      toast.warn('Quantidade máxima: 49');
-      return;
-    }
-
-    setCount(newCount);
-  }
-
   function handleAddProductAtTheShopCart() {
     const productItem = {
       id: product.id,
@@ -65,8 +54,19 @@ export function ProductList({ product }: ProductItemProps) {
       price: product.price,
     };
 
-    setCount(1);
     addProductToShopCart({ ...productItem }, count);
+    setCount(1);
+  }
+
+  function handleAddOneProduct() {
+    const newCount = count + 1;
+
+    if (newCount >= 50) {
+      toast.warn('Quantidade máxima: 49');
+      return;
+    }
+
+    setCount(newCount);
   }
 
   function handleRemoveOneProduct() {
@@ -83,7 +83,7 @@ export function ProductList({ product }: ProductItemProps) {
   function handleChangeProduct(countProduct: number) {
     const newCount = countProduct;
 
-    if (newCount < 1 || newCount >= 50) {
+    if (newCount < 0 || newCount >= 50) {
       return;
     }
 
@@ -113,13 +113,12 @@ export function ProductList({ product }: ProductItemProps) {
         <div className='actions'>
           <InputCount
             value={count}
-            onAddProduct={handleAddOneProduct}
-            onRemoveProduct={handleRemoveOneProduct}
+            onClickAddProduct={handleAddOneProduct}
+            onClickRemoveProduct={handleRemoveOneProduct}
             onChange={(e) => handleChangeProduct(Number(e.target.value))}
             min={1}
             max={50}
           />
-          <ToastContainer />
         </div>
 
         <button className='buy-button' onClick={handleAddProductAtTheShopCart}>

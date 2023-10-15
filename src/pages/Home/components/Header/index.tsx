@@ -8,8 +8,6 @@ export function Header() {
   const navigate = useNavigate();
   const { cart } = useCart();
 
-  const cartLength = cart ? cart.length : 0;
-
   return (
     <HeaderContainer>
       <img src={CoffeDeliveryLogo} alt='Logotipo do coffe delivery' />
@@ -23,7 +21,7 @@ export function Header() {
         <CartButton
           title='Carrinho'
           onClick={() => navigate('/checkout')}
-          numberToItensAtShopCart={cartLength}
+          numbertoitemsatshopcart={cart.length}
         >
           <ShoppingCart size={18} weight='fill' />
         </CartButton>

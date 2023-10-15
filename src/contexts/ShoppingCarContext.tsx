@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorege';
 import { toast } from 'react-toastify';
+import { useLocalStorage } from '../hooks/useLocalStorege';
 
 interface ShoppingCartProviderProps {
   children: ReactNode;
@@ -32,9 +32,9 @@ export const ShoppingCartContext = createContext<ShoppingCartContextData>(
 );
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-  const [loadLocalStorage, saveToLocalStorage] = useLocalStorage();
+  const { loadLocalStorage, saveToLocalStorage } = useLocalStorage();
   const [cart, setCart] = useState(() => {
-    const cartJSON = loadLocalStorage('@coffe-delivery:shop-cart');
+    const cartJSON = loadLocalStorage('@coffee-delivery:shop-cart');
 
     if (!cartJSON) return [] as FullCartList[];
 
@@ -57,9 +57,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         if (item.product.id === product.id) {
           const newCount = item.count + count;
 
-          if (newCount > 99) {
-            toast.warn('Quantidade máxima: 99');
-            return { ...item, count: 99 };
+          if (newCount > 50) {
+            toast.warn('Quantidade máxima: 50'); // Corrigido para 50
+            return { ...item, count: 50 };
           } else {
             toast.success('Item adicionado ao carrinho');
             return { ...item, count: newCount };
@@ -80,21 +80,19 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     });
 
     setCart(updateProduct);
+    saveToLocalStorage(updateProduct, '@coffee-delivery:shop-cart'); // Corrigido a chave
   }
 
-  function deleteProductAtCart(productUD: number) {
-    const newCartList = cart.filter((item) => item.product.id !== productUD);
+  function deleteProductAtCart(productID: number) {
+    const newCartList = cart.filter((item) => item.product.id !== productID);
 
     setCart(newCartList);
-    localStorage.setItem(
-      '@coffe-delivery:shop-cart',
-      JSON.stringify(newCartList)
-    );
+    saveToLocalStorage(newCartList, '@coffee-delivery:shop-cart'); // Corrigido a chave
   }
 
   function clearCart() {
     setCart([]);
-    localStorage.removeItem('@coffe-delivery:shop-cart');
+    localStorage.removeItem('@coffee-delivery:shop-cart'); // Corrigido a chave
   }
 
   return (

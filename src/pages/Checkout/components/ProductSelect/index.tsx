@@ -71,27 +71,37 @@ export function ProductSelect({ product, countProduct }: ProductSelectProps) {
 
   return (
     <Container key={product.id}>
-      <img src={product.image} alt={product.name} />
-      <div className='product-info'>
-        <h3>{product.name}</h3>
-        <span>{product.description}</span>
-        <span>Preço: {formatCashToString(product.price)}</span>
+      <div className='info'>
+        <img src={product.image} alt='' />
+
+        <div className='details'>
+          <span>{product.name}</span>
+
+          <div className='actions'>
+            <InputCount
+              value={count}
+              onChange={(e) =>
+                handleChangeProductAtTheCart(Number(e.target.value))
+              }
+              min={1}
+              max={50}
+              onClickAddProduct={handleAddOneProduct}
+              onClickRemoveProduct={handleRemoveOneProduct}
+            />
+
+            <button
+              type='button'
+              className='remove-button'
+              onClick={() => handleDeleteProductAtTheCart(product.id)}
+            >
+              <Trash size={16} weight='regular' />
+              <span>remover</span>
+            </button>
+          </div>
+        </div>
       </div>
-      <div className='product-count'>
-        <InputCount
-          count={count}
-          onAdd={handleAddOneProduct}
-          onRemove={handleRemoveOneProduct}
-          onChange={handleChangeProductAtTheCart}
-        />
-        <span>Total: {totalPrice}</span>
-        <button
-          onClick={() => handleDeleteProductAtTheCart(product.id)}
-          className='delete-button'
-        >
-          <Trash size={24} />
-        </button>
-      </div>
+
+      <div className='cost'>R$ {totalPrice}</div>
     </Container>
   );
 }

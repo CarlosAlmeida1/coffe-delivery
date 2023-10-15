@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const UserInfo = styled.section`
+  h2 {
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+
   width: 100%;
   max-width: 40rem;
   display: flex;
@@ -131,7 +135,6 @@ export const PaymentMethodButton = styled.div`
     color: ${(props) => props.theme['base-text']};
     font-size: 0.75rem;
     cursor: pointer;
-    transition: background-color 0.2s;
 
     svg {
       margin-right: 0.5rem;
@@ -140,6 +143,11 @@ export const PaymentMethodButton = styled.div`
 
     &:not(.selected):hover {
       background: ${(props) => props.theme['base-hover']};
+    }
+
+    &:focus {
+      outline: 2px solid ${(props) => props.theme['purple-dark']};
+      background: ${(props) => props.theme['purple-light']};
     }
   }
 
