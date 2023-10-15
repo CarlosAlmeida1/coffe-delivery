@@ -59,6 +59,12 @@ export const Button = styled.button`
   }
 `;
 
+export const HomeButton = styled(Button)`
+  border-radius: 50;
+  color: ${(props) => props.theme['purple-dark']};
+  background: ${(props) => props.theme['purple-light']};
+`;
+
 interface CartButtonProps {
   numbertoitemsatshopcart: number;
 }

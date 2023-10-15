@@ -1,7 +1,12 @@
-import { CartButton, HeaderContainer, LocationBadge } from './styles';
+import {
+  CartButton,
+  HeaderContainer,
+  HomeButton,
+  LocationBadge,
+} from './styles';
 import { useNavigate } from 'react-router-dom';
 import CoffeDeliveryLogo from '../../../../assets/logotipo.svg';
-import { MapPin, ShoppingCart } from 'phosphor-react';
+import { HouseSimple, MapPin, ShoppingCart } from 'phosphor-react';
 import { useCart } from '../../../../hooks/useCart';
 
 export function Header() {
@@ -17,6 +22,14 @@ export function Header() {
           <MapPin size={18} weight='fill' />
           <span>Goioerê, PR</span>
         </LocationBadge>
+
+        <HomeButton
+          title='
+        Home'
+          onClick={() => navigate('/')}
+        >
+          <HouseSimple size={18} weight='bold' />
+        </HomeButton>
 
         <CartButton
           title='Carrinho'
