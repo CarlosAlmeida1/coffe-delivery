@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { ProductItemContainer } from './styles';
 import ScrollReveal from 'scrollreveal';
@@ -6,7 +5,7 @@ import { formatCashToString } from '../../../../utils/formatCashToString';
 import { ShoppingCart } from 'phosphor-react';
 import { InputCount } from '../InputCount';
 import { toast } from 'react-toastify';
-import 'react-toastify/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { useCart } from '../../../../hooks/useCart';
 
 export interface Product {
@@ -16,7 +15,7 @@ export interface Product {
   price: number;
   tags: string[];
   image: string;
-  isAvailable: boolean;
+  isAvaliable?: boolean;
 }
 
 interface ProductItemProps {
@@ -24,9 +23,9 @@ interface ProductItemProps {
 }
 
 export function ProductList({ product }: ProductItemProps) {
-  const productRef = useRef<HTMLAnchorElement>(null);
+  const productRef = useRef<HTMLLIElement | null>(null);
   const [count, setCount] = useState(1);
-  const [valueFormat, setValueFormat] = useState<number | string>(
+  const [valueFormatted, setValueFormatted] = useState<number | string>(
     product.price
   );
 
@@ -42,7 +41,7 @@ export function ProductList({ product }: ProductItemProps) {
 
   useEffect(() => {
     const newPrice = formatCashToString(product.price * count);
-    setValueFormat(newPrice);
+    setValueFormatted(newPrice);
   }, [product.price, count]);
 
   function handleAddProductAtTheShopCart() {
@@ -95,8 +94,8 @@ export function ProductList({ product }: ProductItemProps) {
       <img src={product.image} alt={product.name} />
 
       <div className='badge-features'>
-        {product.tags.map((tag) => (
-          <span key={tag}>{tag.toLocaleUpperCase()}</span>
+        {product.tags.map((tag: string) => (
+          <span key={tag}>{tag.toUpperCase()}</span>
         ))}
       </div>
 
@@ -107,7 +106,7 @@ export function ProductList({ product }: ProductItemProps) {
       <footer>
         <span>R$</span>
         <strong>
-          {count === 0 ? formatCashToString(product.price) : valueFormat}
+          {count === 0 ? formatCashToString(product.price) : valueFormatted}
         </strong>
 
         <div className='actions'>

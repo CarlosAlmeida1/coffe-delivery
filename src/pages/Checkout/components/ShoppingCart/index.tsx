@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from './styles';
 import { formatCashToString } from '../../../../utils/formatCashToString';
 import { useCart } from '../../../../hooks/useCart';
@@ -21,7 +21,7 @@ export function ShoppingCart() {
   const custOfDelivery = 3.5;
   const custOfDeliveryFormattedToBR = formatCashToString(custOfDelivery);
 
-  const sumTotalOfItensFormatted = formatCashToString(sumTotalItems);
+  const sumTotalOfItemsFormatted = formatCashToString(sumTotalItems);
 
   const priceFinal = sumTotalItems + custOfDelivery;
   const priceFinalFormatted = formatCashToString(priceFinal);
@@ -46,7 +46,7 @@ export function ShoppingCart() {
         )}
 
         <div className='prices'>
-          <span>Total de itens</span> <span>R$ {sumTotalOfItensFormatted}</span>
+          <span>Total de itens</span> <span>R$ {sumTotalOfItemsFormatted}</span>
           <span>Taxa de entrega</span>
           <span>R$ {custOfDeliveryFormattedToBR}</span>
           <span>
@@ -58,7 +58,7 @@ export function ShoppingCart() {
         </div>
 
         <button type='submit' disabled={!hasProductInShoppingCart}>
-          comfirmar pedido
+          confirmar pedido
         </button>
       </div>
     </Container>
