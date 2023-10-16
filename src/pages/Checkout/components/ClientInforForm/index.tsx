@@ -20,12 +20,12 @@ import { useFormContext } from 'react-hook-form';
 
 interface ClientFormProps {
   paymentMethod: PaymentMethod | undefined;
-  onSelectMethod: (method: PaymentMethod) => void;
+  onSelectPaymentMethod: (method: PaymentMethod) => void;
 }
 
 export function ClientInfoForm({
   paymentMethod,
-  onSelectMethod,
+  onSelectPaymentMethod,
 }: ClientFormProps) {
   const { setValue } = useFormContext();
   const [zipCode, setZipCode] = useState<string>('');
@@ -133,7 +133,7 @@ export function ClientInfoForm({
           <button
             type='button'
             className={paymentMethod === 'credit' ? 'selected' : ''}
-            onClick={() => onSelectMethod('credit')}
+            onClick={() => onSelectPaymentMethod('credit')}
           >
             <CreditCard size={16} />
             CARTÃO DE CRÉDITO
@@ -142,7 +142,7 @@ export function ClientInfoForm({
           <button
             type='button'
             className={paymentMethod === 'debit' ? 'selected' : ''}
-            onClick={() => onSelectMethod('debit')}
+            onClick={() => onSelectPaymentMethod('debit')}
           >
             <Bank size={16} />
             CARTÃO DE DÉBITO
@@ -151,7 +151,7 @@ export function ClientInfoForm({
           <button
             type='button'
             className={paymentMethod === 'cash' ? 'selected' : ''}
-            onClick={() => onSelectMethod('cash')}
+            onClick={() => onSelectPaymentMethod('cash')}
           >
             <Money size={16} />
             DINHEIRO

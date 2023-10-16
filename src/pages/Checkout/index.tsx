@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCart } from '../../hooks/useCart';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { ShoppingCart } from './components/ShoppingCart';
@@ -17,16 +18,17 @@ const checkoutValidationSchema = zod.object({
   uf: zod.string().min(2),
 });
 
-export type CheckoutFormatValues = zod.infer<typeof checkoutValidationSchema>;
+export type CheckoutFormValues = zod.infer<typeof checkoutValidationSchema>;
 export type PaymentMethod = 'cash' | 'credit' | 'debit';
 
 export function Checkout() {
+  const navigate = useNavigate();
   const { cart, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<
     PaymentMethod | undefined
   >();
 
-  const methods = useForm<CheckoutFormatValues>({
+  const methods = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutValidationSchema),
   });
 
@@ -42,7 +44,7 @@ export function Checkout() {
     }
   }, [errors]);
 
-  function handleChekout() {
+  function handleChekout(data: CheckoutFormValues) {
     if (cart.length <= 0) {
       toast.warn('Carrinho vazio');
       return;
@@ -55,6 +57,14 @@ export function Checkout() {
 
     reset();
     clearCart();
+
+    navigate('/success', {
+      state: {
+        paymentMethod,
+        address: data,
+      },
+      replace: true,
+    });
   }
 
   function handleSelectPaymentMethod(method: PaymentMethod) {
